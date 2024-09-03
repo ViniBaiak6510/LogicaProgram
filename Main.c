@@ -1,6 +1,16 @@
 #include <stdio.h>
 
 int main(){
+   char nome[99];
+   float saldo = 0.0;
+
+   printf("Digite seu nome:\n");
+   scanf("%s", nome);
+
+    printf("%s", nome);
+   /*
+
+
    int sair = 1, escolha = 0;
 
    do{
@@ -29,4 +39,7 @@ int main(){
             sair = 0;
         }
    }while(sair != 0);
+
+
+   */
 }
