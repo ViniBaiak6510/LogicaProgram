@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+void ReSaldo (float saldo){
+    printf("Seu Saldo eh %.2f\n", saldo);
+    printf("------------------------------------------\n");
+}
 float sub (float n1, float n2){
     return n1 - n2;
 
@@ -7,7 +11,6 @@ float sub (float n1, float n2){
 float adi (float n1, float n2){
     return n1 + n2;
 }
-
 
 int main(){
    char nome[99];
@@ -21,7 +24,19 @@ int main(){
    scanf("%f", &saldo);
    printf("------------------------------------------\n");
 
-   int sair = 1, escolha = 0;
+   int sair = 1, escolha = 0, contador = 0;
+   char extrato[100][100];
+
+    // Inicializando a matriz com algumas strings
+    snprintf(extrato[contador], 100, "Operacao");
+    snprintf(extrato[contador+1], 100, "Valor");
+    snprintf(extrato[contador+2], 100, "Saldo");
+
+
+
+    contador = 3; //contador das posicoes de matriz
+    int n = 3; // contador para a impressao de matriz
+
 
    do{
         printf("Escolha uma das opcoes a seguir:\n1.Saque\n2.Deposito\n3.Emprestimo\n4.Consulta de Saldo\n5.Extrato\n6.Transferencia\n7.Sair\n");
@@ -37,6 +52,7 @@ int main(){
                 printf("Saldo Insuficiente\n");
             }
             else{
+               printf("Saque aprovado\n");
                int  cont100 = 0, cont50 = 0, cont20 = 0, cont10 = 0, cont5 = 0, cont2= 0; //Contador de cedulas
                saldo = sub(saldo, saque); // Sub do Saldo, usando a funcao
                 while(saque >= 2){ // verificadores de cedulas
@@ -74,11 +90,19 @@ int main(){
                printf("Notas de 2: %d\n", cont2);
                printf("------------------------------------------\n");
 
+               char num[99];
+
+               sprintf(num, "%d", saldo);
+
+               n+=3;
+
+               snprintf(extrato[contador], 100, "1 - Saque");
+               snprintf(extrato[contador+1], 100, "5000");
+               snprintf(extrato[contador+2], 100, "60000");
+
+               contador+=3;
+
             }
-
-
-            //O valor depositado deve alterar o saldo disponível e registrar o evento de depósito.//
-
         }
         else if(escolha == 2){
             float deposito = 0;
@@ -93,17 +117,40 @@ int main(){
             float emprestimo = 0, parcela = 0, rendaM = 0;
 
             printf ("Qual o valor do emprestimo?\n");
-            scanf ("%f", & emprestimo);
-            printf ("Em quantas vezes deseja pagar?\n"):
+            scanf ("%f", &emprestimo);
+            ReSaldo(saldo);
+            printf ("Em quantas vezes deseja pagar?\n");
             scanf ("%f", &parcela);
             printf ("Qual sua renda mensal?\n");
             scanf ("%f", &rendaM);
+
+            if(emprestimo / parcela > rendaM * 0.3){
+                printf("Emprestimo Recusado\n");
+            }
+            else{
+                 printf("Emprestimo Aprovado\n");
+                 saldo += emprestimo;
+            }
         }
         else if(escolha == 4){
-            printf("Seu Saldo eh %.2f\n", saldo);
-            printf("------------------------------------------\n");
+            ReSaldo(saldo);
         }
         else if(escolha == 5){
+                printf("Correntista: %s\n\n", nome);
+                for (int i = 0; i < n; i++) {
+                        if(i % 3 == 0){
+                            printf("\n5%s |",extrato[i]);
+
+                        }
+                        else{
+                           printf("%5s |",extrato[i]);
+                        }
+
+                       // printf("%10s | ", extrato[i]);
+                       // printf("%10s | ", ex[i]);
+                       // printf("\n");
+                }
+        printf("\n");
 
         }
         else if(escolha == 6){
@@ -112,24 +159,21 @@ int main(){
             printf ("Quem vai receber a transferencia?");
             scanf ("%s", &nome2);
             printf ("Saldo atual: %.2f\n", saldo);
-            printf ("")
+            printf ("");
             scanf ("%f", &transf);
 
+
+
+
         }
-        else{
+        else if(escolha == 7){
             sair = 0;
         }
-   }while(sair != 0); //
+        else{
+            printf("Operacao Invalida\n");
+            printf("------------------------------------------\n");
+        }
+   }while(sair != 0);
 
-   printf("%.2f", saldo);
-
-/*
-
-
-
-
-*/
-
+   return 0; //
 }
-
-
