@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void ReSaldo (float saldo){
     printf("Seu Saldo eh %.2f\n", saldo);
@@ -6,7 +8,6 @@ void ReSaldo (float saldo){
 }
 float sub (float n1, float n2){
     return n1 - n2;
-
 }
 float adi (float n1, float n2){
     return n1 + n2;
@@ -15,6 +16,8 @@ float adi (float n1, float n2){
 int main(){
    char nome[99];
    float saldo = 0.0;
+   char nSaldo[99];
+   char nValor[99];
 
    printf("Digite seu nome:\n");
    scanf("%s", &nome);
@@ -24,6 +27,8 @@ int main(){
    scanf("%f", &saldo);
    printf("------------------------------------------\n");
 
+   itoa(saldo, nSaldo, 10);
+
    int sair = 1, escolha = 0, contador = 0;
    char extrato[100][100];
 
@@ -31,11 +36,14 @@ int main(){
     snprintf(extrato[contador], 100, "Operacao");
     snprintf(extrato[contador+1], 100, "Valor");
     snprintf(extrato[contador+2], 100, "Saldo");
+    snprintf(extrato[contador+3], 100, "0 - Saldo Inicial");
+    snprintf(extrato[contador+4], 100, nSaldo);
+    snprintf(extrato[contador+5], 100, nSaldo);
 
 
 
-    contador = 3; //contador das posicoes de matriz
-    int n = 3; // contador para a impressao de matriz
+    contador = 6; //contador das posicoes de matriz
+    int n = 6; // contador para a impressao de matriz
 
 
    do{
@@ -55,6 +63,10 @@ int main(){
                printf("Saque aprovado\n");
                int  cont100 = 0, cont50 = 0, cont20 = 0, cont10 = 0, cont5 = 0, cont2= 0; //Contador de cedulas
                saldo = sub(saldo, saque); // Sub do Saldo, usando a funcao
+               itoa(saldo, nSaldo, 10);
+               itoa(saque, nValor, 10);
+
+
                 while(saque >= 2){ // verificadores de cedulas
                     if(saque >= 100){
                         cont100++;
@@ -90,15 +102,11 @@ int main(){
                printf("Notas de 2: %d\n", cont2);
                printf("------------------------------------------\n");
 
-               char num[99];
-
-               sprintf(num, "%d", saldo);
-
                n+=3;
 
                snprintf(extrato[contador], 100, "1 - Saque");
-               snprintf(extrato[contador+1], 100, "5000");
-               snprintf(extrato[contador+2], 100, "60000");
+               snprintf(extrato[contador+1], 100, nValor);
+               snprintf(extrato[contador+2], 100, nSaldo);
 
                contador+=3;
 
@@ -139,33 +147,34 @@ int main(){
                 printf("Correntista: %s\n\n", nome);
                 for (int i = 0; i < n; i++) {
                         if(i % 3 == 0){
-                            printf("\n5%s |",extrato[i]);
-
+                            printf("\n%12s",extrato[i]);
                         }
                         else{
-                           printf("%5s |",extrato[i]);
+                           printf("%12s",extrato[i]);
                         }
-
-                       // printf("%10s | ", extrato[i]);
-                       // printf("%10s | ", ex[i]);
-                       // printf("\n");
                 }
-        printf("\n");
+        printf("\n\n");
 
         }
         else if(escolha == 6){
-            float transf = 0,valor = 0;
+            float transf = 0.0,valor = 0;
             char nome2[99];
-            printf ("Quem vai receber a transferencia?");
+            printf ("Quem vai receber a transferencia?\n");
             scanf ("%s", &nome2);
             printf ("Saldo atual: %.2f\n", saldo);
-            printf ("");
+            printf ("Qual valor deseja transferir?\n");
             scanf ("%f", &transf);
 
-
-
-
+        if(saldo >= transf){
+                printf ("Valor transferido\n");
+                saldo = sub(saldo, transf);
+                printf("------------------------------------------\n");
+            }else{
+                printf("Saldo insuficiente\n");
+                printf("------------------------------------------\n");
+            }
         }
+
         else if(escolha == 7){
             sair = 0;
         }
@@ -175,5 +184,5 @@ int main(){
         }
    }while(sair != 0);
 
-   return 0; //
+   return 0;
 }
