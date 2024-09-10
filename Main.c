@@ -29,21 +29,25 @@ int main(){
 
    itoa(saldo, nSaldo, 10);
 
-   int sair = 1, escolha = 0, contador = 0;
+   int sair = 1, escolha = 0;
    char extrato[100][100];
 
+
+   //, contador = 0
     // Inicializando a matriz com algumas strings
-    snprintf(extrato[contador], 100, "Operacao");
-    snprintf(extrato[contador+1], 100, "Valor");
-    snprintf(extrato[contador+2], 100, "Saldo");
-    snprintf(extrato[contador+3], 100, "0 - Saldo Inicial");
-    snprintf(extrato[contador+4], 100, nSaldo);
-    snprintf(extrato[contador+5], 100, nSaldo);
+    snprintf(extrato[0], 100, "Operacao");
+    snprintf(extrato[1], 100, "Valor");
+    snprintf(extrato[2], 100, "Saldo");
+    snprintf(extrato[3], 100, "0 - Saldo Inicial");
+    snprintf(extrato[4], 100, nSaldo);
+    snprintf(extrato[5], 100, nSaldo);
 
 
 
-    contador = 6; //contador das posicoes de matriz
+    int contador = 6; //contador das posicoes de matriz
     int n = 6; // contador para a impressao de matriz
+    int vNome = 0; //Colocar o nome no extrato
+    int nomes[50];
 
 
    do{
@@ -117,16 +121,28 @@ int main(){
             printf ("Qual valor vai ser depositado?\n");
             scanf("%f", &deposito);
             saldo = adi (saldo, deposito);
+            itoa(saldo, nSaldo, 10);
+            itoa(deposito, nValor, 10);
+            printf("Deposito aprovado\n");
             printf("------------------------------------------\n");
+
+             n+=3;
+
+               snprintf(extrato[contador], 100, "2 - Deposito");
+               snprintf(extrato[contador+1], 100, nValor);
+               snprintf(extrato[contador+2], 100, nSaldo);
+
+               contador+=3;
 
 
         }
         else if(escolha == 3){
             float emprestimo = 0, parcela = 0, rendaM = 0;
 
+            printf("Seu Saldo eh %.2f\n", saldo);
             printf ("Qual o valor do emprestimo?\n");
             scanf ("%f", &emprestimo);
-            ReSaldo(saldo);
+
             printf ("Em quantas vezes deseja pagar?\n");
             scanf ("%f", &parcela);
             printf ("Qual sua renda mensal?\n");
@@ -134,11 +150,24 @@ int main(){
 
             if(emprestimo / parcela > rendaM * 0.3){
                 printf("Emprestimo Recusado\n");
+                 printf("------------------------------------------\n");
             }
             else{
                  printf("Emprestimo Aprovado\n");
                  saldo += emprestimo;
+                  printf("------------------------------------------\n");
             }
+            itoa(saldo, nSaldo, 10);
+            itoa(emprestimo, nValor, 10);
+
+               n+=3;
+
+               snprintf(extrato[contador], 100, "3 - Emprestimo");
+               snprintf(extrato[contador+1], 100, nValor);
+               snprintf(extrato[contador+2], 100, nSaldo);
+
+               contador+=3;
+
         }
         else if(escolha == 4){
             ReSaldo(saldo);
@@ -146,19 +175,25 @@ int main(){
         else if(escolha == 5){
                 printf("Correntista: %s\n\n", nome);
                 for (int i = 0; i < n; i++) {
-                        if(i % 3 == 0){
+                        if(nomes[i] == i && i != 0){
+                            printf("\n4 - Transf %s", extrato[i]);
+                        }
+
+                        else if(i % 3 == 0){
                             printf("\n%12s",extrato[i]);
                         }
                         else{
                            printf("%12s",extrato[i]);
                         }
                 }
+        printf("------------------------------------------\n");
         printf("\n\n");
 
         }
         else if(escolha == 6){
             float transf = 0.0,valor = 0;
             char nome2[99];
+
             printf ("Quem vai receber a transferencia?\n");
             scanf ("%s", &nome2);
             printf ("Saldo atual: %.2f\n", saldo);
@@ -173,6 +208,20 @@ int main(){
                 printf("Saldo insuficiente\n");
                 printf("------------------------------------------\n");
             }
+
+            itoa(saldo, nSaldo, 10);
+            itoa(transf, nValor, 10);
+
+            vNome = n;
+            nomes[n] = vNome;
+            n+=3;
+
+               snprintf(extrato[contador], 100, nome2);
+               snprintf(extrato[contador+1], 100, nValor);
+               snprintf(extrato[contador+2], 100, nSaldo);
+
+               contador+=3;
+
         }
 
         else if(escolha == 7){
